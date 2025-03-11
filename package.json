@@ -19,6 +19,7 @@
   "homepage": "https://github.com/mfsalop/technicaltest#readme",
   "devDependencies": {
     "cypress": "^14.1.0",
-    "cypress-mochawesome-reporter": "^3.8.2"
+    "cypress-mochawesome-reporter": "^3.8.2",
+    "supertest": "^7.0.0"
   }
 }
