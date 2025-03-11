@@ -1,38 +1,34 @@
 import Login from '../pageObject/loginPage';
 import Products from '../pageObject/productsPage';
 
-describe('Users interacts with Products', () => {
-  it('Standard User adds products', () => {
+describe('Standard User interacts with Products', () => {
+  beforeEach(() => {
     cy.fixture('credentials').then((credentials) => {
       const user1 = credentials.user1;
-
-      // Visiting the page 
+      // Login with standard user
       Login.visit();
-      // Entering the username and password
       Login.fillUsername(user1.username);
       Login.fillPassword(user1.password);
-      // Clicking the login button
       Login.clickLoginButton();
-      // Verifying the login
+      // Verify the user has landed on the products page
       Products.verifyProductsBaseUrl();
-      // Adding a product to the cart
-      Products.clickItemAddButtonBackPack();
-      // Clicking the shopping cart link
-      Products.clickShoppingCartLink();
-      // Clicking the checkout button
-      Products.clickCheckoutButton();
-      // Filling out the checkout form 
-      Products.fillCheckOutFirstName('John');
-      Products.fillCheckOutLastName('Doe');
-      Products.fillCheckOutZipCode('12345');
-      // Clicking the continue button
-      Products.clickContinueButton();
-      // Clicking the finish button
-      Products.clickFinishButton();
-      // Verifying the complete container
-      Products.verifyCompleteContainer();
-      // Clicking the back to home button
-      Products.clickBacktoHomeButton();
     });
-  })
-})
+  });
+
+  it('Standard User short products list', () => {
+    // Click on filter button 
+    // Sort product list by A-Z
+    Products.shortAZ();
+    // Sort product list by Z-A
+    Products.shortZA();
+    // Sort product list by Low to High
+    Products.shortLOHI();
+    // Sort product list by High to Low
+    Products.shortHILO();
+    
+  });
+  
+  it('Standard User clicks on product image', () => {
+    Products.clickBackPackItemNameLink();
+  });
+});
