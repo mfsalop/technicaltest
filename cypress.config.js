@@ -1,4 +1,7 @@
 const { defineConfig } = require("cypress");
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}` // 
+});
 
 module.exports = defineConfig({
   reporter: 'cypress-mochawesome-reporter',  
@@ -11,7 +14,15 @@ module.exports = defineConfig({
     saveAllAttempts: false,
   },
   e2e: {
-    projectId: 'r41ais',  // Ensure projectId is inside the e2e object
+    screenshotOnRunFailure: true,  
+    video: true,                   
+    videoCompression: 32,          
+    videoUploadOnPasses: false,
+    projectId: 'r41ais',  
+    baseUrl: process.env.BASE_URL, 
+    env: {
+      apiUrl: process.env.API_URL, 
+    },
     setupNodeEvents(on, config) {
       // Initialize the mochawesome reporter plugin
       require('cypress-mochawesome-reporter/plugin')(on);

@@ -1,0 +1,112 @@
+Technical Test
+
+Section 1: Theoretical Questions
+
+Explain the difference between functional and non-functional testing. Provide examples of each in the context of web applications.
+Functional testing focuses on ensuring that the system works according to its defined requirements and behaves as expected for specific use cases. It verifies that the core functionality of the system is correctly implemented.
+Non-functional testing, on the other hand, evaluates how the system performs under various conditions, such as performance, usability, reliability, and scalability. It examines the system's behavior beyond its basic functionality and ensures it meets quality attributes that affect user experience and system performance.
+Example:
+Consider the user story:
+"AS A USER, I WANT THE ABILITY TO BUY ITEMS IN THE SAUCELABS STORE."
+Functional Testing: Verifies that a user can successfully navigate the store, browse items, add them to the cart, and complete the checkout process. This ensures the basic functionality works as intended.
+Non-Functional Testing: Assesses performance aspects such as how quickly the system completes a request. For instance, when a request is sent to a third-party payment system during checkout, non-functional testing would verify that the request completes within the required 30-second time frame.
+
+Describe the concept of "Shift-Left Testing" and how you would implement this approach in an agile development team.
+Shift-left testing involves performing functional and non-functional testing early in the Software Development Life Cycle (SDLC). The goal is to identify and address potential issues as soon as possible, improving product quality and reducing costs.
+One approach I use is reviewing the requirements early in the process. By thoroughly analyzing the product requirements, many questions can arise that lead to a better understanding of the feature and help identify potential issues early. This proactive approach ensures better quality and reduces the risk of errors later in the process.
+Another approach is implementing non-functional testing early on, such as performance, security, and load testing. Tools like Postman, JMeter, and even manual testing can be used to identify potential performance bottlenecks or security breaches early in the development process. Addressing these issues early helps prevent scalability problems and ensures the product can handle future demands.
+
+Explain the testing pyramid and how you would determine the optimal distribution between different types of tests for a web application.
+There are several versions of the test pyramid, but I'll focus on the one I'm most familiar with, as it’s the easiest to explain. The testing pyramid typically has three levels:
+Unit Testing (Base): This is the foundation of the pyramid. Unit tests are fast, automated, and cover small pieces of code. The majority of your tests should be unit tests because they help catch bugs early, right from the code’s conception. Every piece of code should be thoroughly unit tested to ensure stability and reliability at the lowest level.
+Integration Testing (Middle): This level ensures that different modules of the application work together as expected. Integration tests may involve testing interactions between components, services, and APIs, including third-party systems. Integration tests are more time-consuming than unit tests but are crucial for identifying issues that arise when components interact.
+End-to-End (E2E) Testing (Top): E2E tests simulate the entire application flow from the user's perspective. These tests ensure that the system works as expected in a real-world environment. However, E2E tests are slower and more expensive to run, so they should be used sparingly, focusing on critical user flows.
+The distribution of tests across these levels depends on the specific features of the application. Each product has different needs, but in general, the focus should be on having a strong base of unit tests. Unit tests catch issues early and make it easier to identify problems in the code’s early stages.
+In line with the shift-left approach, integration tests should be performed as early as possible during development. This helps identify issues related to interactions between components or with third-party systems before they become bigger problems. Integration tests can also help identify potential risks that might arise as the system scales.
+Finally, once the critical functionality and interactions have been validated, manual or E2E testing should be used to check the overall user experience. E2E testing ensures that the system works as expected from the user's perspective and helps address design issues and any functional discrepancies that might not have been caught in the lower levels.
+Detail the best practices for maintaining a stable and sustainable automation framework in the long term. 
+
+Update Due to Feature Changes or New Deployments:
+Test cases need to be revisited whenever there are application changes or new feature deployments. The functionality of the application may evolve, and as a result, test cases may need to be updated, re-scoped, or retired. It is essential to ensure that the automated tests remain aligned with the latest version of the application.
+Managing Bugs and Test Coverage:
+Re-running the same tests can lead to false positives, where the tests always pass even if there are underlying issues. It's important to identify potential regressions and areas where new bugs may emerge. Test cases should also be updated based on recent critical issues discovered during testing or reported by users. Expanding test coverage to include scenarios related to recently identified problems is key to maintaining a high-quality product.
+Automating Critical and High-Priority Functionalities:
+Not all aspects of the system need to be automated. The automation effort should focus on critical and high-priority functionalities that are crucial for the system's stability and performance. By automating these areas, you ensure that essential features are always tested, minimizing the risk of incidents or major issues. Regression testing is particularly beneficial for these critical workflows, acting as an ongoing safety net.
+Testing Management Tools:
+A robust automation framework includes a system for managing test cases. A testing management tool plays a crucial role in maintaining and updating your test suite. It provides a centralized place for writing, storing, and tracking test cases, allowing teams to efficiently manage changes as the system evolves. The ability to track version changes and maintain a history of test cases is essential for long-term sustainability.
+
+Explain how you would handle test automation in an application with asynchronous or dynamic components.
+How I’d handle test automation in an app with asynchronous or dynamic components depends on the specific app, but let’s imagine a scenario where a dynamic element shows up after an API call. If the use case is clear—like the element becoming visible once the API call completes—then I’d start by checking if the element has any test-specific attributes (like data-test-id) that I can use to automate it.
+If I need to account for wait times, I’d go with explicit waits. This way, I can control how long the automation waits for the element to appear, ensuring that I’m not just blindly waiting but waiting for the element to be ready before proceeding. It’s important to be able to wait for the right conditions, especially when elements might take a bit of time to show up after an API call.
+That said, automation can always have its surprises. Even with waits, there's always the chance that something unexpected happens. So, I'd also make sure that the automation can handle these surprises—like when an element doesn’t show up as expected—so the test can continue smoothly.
+
+What are the advantages and disadvantages of using XPath selectors versus CSS selectors in automated tests?
+Both XPath and CSS selectors depend on what's available and the specific needs of the test. XPath is more specific and ideal for identifying dynamic elements, though it can be long. CSS selectors are versatile, especially when elements have unique IDs, and they offer better performance in most cases. Based on my experience, CSS is typically the better option for performance, but for working with dynamic elements, XPath may be the best choice.
+
+Describe your strategies for handling test data in an automation environment.
+Handling test data in an automation environment depends on the test scenarios and the type of data needed. One effective strategy I use is creating test data files, such as JSON, to store and manage the data used in my tests. For example, when using Cypress, I would create a JSON file containing different test data sets that I need for various scenarios.
+By organizing test data in fixtures, I can separate the data from the test cases themselves. This way, when I need to modify or add new data, I can make changes directly in the fixture file rather than in the test cases themselves. This approach makes the test cases more maintainable, and I can easily control and validate the data being used in each test scenario.
+Additionally, I ensure that the test data is designed to cover a variety of possible scenarios, allowing me to thoroughly test different inputs and edge cases.
+Explain how you would implement REST API testing within your web automation strategy.
+To implement REST API testing within a web automation strategy, here's how I would approach it:
+Determine the Scope and Requirements:
+First, I would determine the scope of the API tests. This includes understanding how many endpoints need to be tested, what kind of data is sent to and received from these endpoints, and what the expected payload is for both requests and responses.
+Choosing the Right Tool:
+Based on the requirements, I would decide whether to use Postman, Cypress, or another tool:
+Postman would be ideal for exploratory API testing and stress/load testing, where I can manually test different endpoints and simulate heavy loads to see how the API behaves under stress.
+Cypress would be more appropriate for automated API testing within the web automation suite. I would use it to confirm that the endpoints are working as expected, and I would validate responses with both positive and negative test cases (e.g., testing valid/invalid inputs, error handling).
+Validating Data and Responses:
+In Cypress, I would write tests to send various types of data to the endpoints and verify the correctness of the responses. For example, I would check if the response status codes (200, 404, 500, etc.) are as expected, and ensure that the response body matches the expected format and contains the correct data.
+I would also test for edge cases, ensuring the API handles invalid or unexpected data properly.
+Load and Stress Testing (if needed):
+If the project requires it, I could use a tool like JMeter to perform load testing (e.g., simulating multiple users logging into the app simultaneously) to assess how the API performs under heavy traffic.
+Integration with CI/CD:
+To ensure the API endpoints maintain their integrity throughout the development cycle, I would integrate these tests into the CI/CD pipeline. This would allow for continuous validation of the endpoints during the deployment process, ensuring that any changes to the backend do not break the API.
+By defining the scope of the API tests, choosing the right tool (Postman for exploratory or load testing, Cypress for automated API testing), and validating data across different scenarios, I can ensure that the APIs work correctly and efficiently. Integrating these tests with the CI/CD pipeline also helps maintain the integrity of the endpoints throughout the development lifecycle.
+
+Section 2: Case Analysis
+Case 1: Flaky Tests
+You have noticed that 15% of automated tests intermittently fail in the CI/CD environment
+without a clear pattern. Describe:
+Methodology you would use to analyze and classify these failures
+Strategies to solve each type of identified problem
+How you would evaluate the effectiveness of your solutions
+
+In order to identify which test cases are failing, I will first review the logs for each error. I will compile all the errors and group them based on the following criteria:
+The error message
+Common components or features related to the failures
+The frequency of the failures
+Once these aspects are reviewed, I will prioritize the tests with the highest failure rates. I will then investigate whether the issue occurs in one or all environments. Next, I will isolate the failing tests to determine if the problem lies within the test itself or if it's related to the implementation.
+Once the issue is identified and resolved, I will rerun the tests to ensure everything is working properly. After implementing the fix in both the tests and the CI/CD environments, I will monitor the error with a clear reporting system to track and address any future occurrences.
+
+Case 2: Scalability
+Your company is growing rapidly, and the number of product features increases every sprint. The execution time of automated tests has doubled in the last 3 months. 
+Propose a strategy to reduce execution time without compromising coverage
+Explain how you would reorganize the automation framework structure to make it more scalable
+Describe how you would implement parallel testing and what challenges you would anticipate
+I will first start by outlining the scope of the automation, understanding which test cases are critical, high, medium, and low priority. With a clear scope and coverage in mind, I will then turn to the testing framework and cross-reference the scope with the existing test cases in the framework. I will ensure that we are properly covering the test cases, meaning we don't have duplicated scenarios that could be covered with a single test, nor any descoped features that should still be tested.
+Once the coverage is established and any cleanup is complete, I will review the execution time of the automated test cases, looking for any issues during execution. I will address anything that could reduce execution time. For example, inefficient test case structures might increase execution time, and adjusting these structures could help resolve the issue.
+I will also assess how we are organizing our test cases. For instance, if we are using the Page Object Model (POM), I will ensure that test data is handled in a centralized way, creating reusable classes rather than having test data hard-coded in each individual test case.
+Next, I will take a step back to review how we are using our test management tool to confirm that test cases are both written and updated properly. Misuse of the tool could result in duplicate test cases, so I will streamline the process, potentially through better training and documentation to ensure the team is following the correct process.
+Finally, I will determine the optimal time of day for test execution. Using parallel testing with BrowserStack or Cypress, I will run multiple test flows simultaneously at specific times. I will prioritize flows from critical to low, targeting the most commonly used browsers or devices (depending on the application), ensuring that actions in one test do not interfere with simultaneous tests. During this time, any unstable tests and dependencies will be identified. If such issues are found, I will enter a monitoring phase to resolve them and create documentation to ensure the correct practices are followed in the future.
+Case 3: DevOps Integration
+Your organization is adopting more advanced DevOps and CI/CD practices.
+Explain how you would integrate automated tests into a CI/CD pipeline
+Describe what metrics you would establish to evaluate the quality and performance of tests
+Detail how you would handle quick feedback on code quality
+First, I will determine the tools I need for this; let's use GitHub Actions as an example. I will create a relationship between components and their associated test cases. For instance, the login page should have test cases specifically associated with the login functionality, and so on.
+Some of the built-in metrics in GitHub, such as average job run time, average job queue time, job failure rate, and failed job usage, can provide valuable insights. These metrics will help identify which workflows are failing and how often, assisting in spotting trends in logs or even in the pull requests being submitted.
+Based on my investigation, I believe that testing pull requests (PRs) or adding pre-commit hooks will help enable early feedback, addressing potential issues in the initial stages of development.
+
+
+Section 3: Practical Exercise
+Repository: https://github.com/mfsalop/technicaltest.git 
+ 
+
+
+
+
+
+
+
+

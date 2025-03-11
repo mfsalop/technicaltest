@@ -14,6 +14,7 @@ describe('Users Logs in', () => {
       Login.clickLoginButton();
       // Verifying the login
       Login.verify();
+      cy.log('User has logged in');
     });
   });
   it('Locked Out User Logs in', () => {
@@ -29,6 +30,7 @@ describe('Users Logs in', () => {
       Login.clickLoginButton();
       // Verifying Error Message Locked Out User
       Login.verifyLockedOutUserError();
+      cy.log('User has not logged in');
     });
   });
   it('Problem User Logs in', () => {
@@ -44,6 +46,7 @@ describe('Users Logs in', () => {
       Login.clickLoginButton();
       // Verifying the login
       Login.verify();
+      cy.log('User has logged in');
     });
   });
   it('Performance Glitch User Logs in', () => {
@@ -59,6 +62,7 @@ describe('Users Logs in', () => {
       Login.clickLoginButton();
       // Verifying the login
       Login.verify();
+      cy.log('User has logged in');
     });
   });   
   it ('Error User Logs in', () => {
@@ -74,6 +78,8 @@ describe('Users Logs in', () => {
       Login.clickLoginButton();
       // Verifying the login
       Login.verify();
+      cy.log('User has logged in');
+
     });
   });
   it ('Visual Error User Logs in', () => {
@@ -89,6 +95,7 @@ describe('Users Logs in', () => {
       Login.clickLoginButton();
       // Verifying the login
       Login.verify();
+      cy.log('User has logged in');
     });
   });
   it ('Incorrect User Credentials Logs in', () => {
@@ -104,6 +111,7 @@ describe('Users Logs in', () => {
       Login.clickLoginButton();
       // Verifying Error Message Incorrect Username and/or Password
       Login.verifyIncorrectCredentialsError();
+      cy.log('User has not logged in');
     });
   });
   it ('Empty User Logs in', () => {
@@ -119,6 +127,7 @@ describe('Users Logs in', () => {
       Login.clickLoginButton();
      // Verifying Error Message Incorrect Username and/or Password
      Login.verifyIncorrectCredentialsError();
+     cy.log('User has not logged in');
     });
   });
 });

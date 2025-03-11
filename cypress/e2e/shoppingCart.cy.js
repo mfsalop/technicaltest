@@ -16,6 +16,7 @@ describe('Users add products & complete checkout process', () => {
       Login.clickLoginButton();
       // Verify the user has landed on the products page
       Products.verifyProductsBaseUrl();
+      cy.log('User has logged in');
     });
 
     // Load user data once for all tests
@@ -57,6 +58,7 @@ describe('Users add products & complete checkout process', () => {
   it ('Standard User adds all products and completes checkout', () => {
     // Add all products to the cart
     addItemsToCart(['BackPack', 'BikeLight', 'BoltTShirt', 'FleeceJacket', 'Onesie', 'RedTShirt']);
+    cy.log('All products have been added to the cart');
 
     // Checkout process
     ShoppingCart.clickShoppingCartLink();
@@ -64,15 +66,19 @@ describe('Users add products & complete checkout process', () => {
     fillCheckoutForm(userData.data2);
     ShoppingCart.clickContinueButton();
     ShoppingCart.clickFinishButton();
+    cy.log('Checkout process has been completed');
 
     // Verify order completion and navigate back to home
     ShoppingCart.verifyCompleteContainer();
+    cy.log('Order has been completed');
     ShoppingCart.clickBacktoHomeButton();
+    cy.log('User has navigated back to home');
   });
 
   it('Standard User adds two products and completes checkout', () => {
     // Add two products to the cart
     addItemsToCart(['BackPack', 'BikeLight']);
+    cy.log('Two products have been added to the cart');
 
     // Checkout process
     ShoppingCart.clickShoppingCartLink();
@@ -80,9 +86,12 @@ describe('Users add products & complete checkout process', () => {
     fillCheckoutForm(userData.data3);
     ShoppingCart.clickContinueButton();
     ShoppingCart.clickFinishButton();
+    cy.log('Checkout process has been completed');
 
     // Verify order completion and navigate back to home
     ShoppingCart.verifyCompleteContainer();
+    cy.log('Order has been completed');
     ShoppingCart.clickBacktoHomeButton();
+    cy.log('User has navigated back to home');
   });
 });
