@@ -1,0 +1,34 @@
+name: Cypress Tests
+
+on:
+  push:
+    branches:
+      - main  # Run on push to main branch
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        parallel-run: [1, 2, 3]  # Run tests in 3 parallel jobs
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Set CI environment variable
+        run: echo "CI=true" >> $GITHUB_ENV  # Ensure the CI environment is set
+
+      - name: Run Cypress tests
+        run: |
+          npx cypress run --record --parallel --key ${{ secrets.CYPRESS_RECORD_KEY }} \
+            --group ${{ matrix.parallel-run }} \
+            --ci-build-id ${{ github.run_id }}
