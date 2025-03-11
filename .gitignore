@@ -1,0 +1,19 @@
+# Node modules
+node_modules/
+
+# macOS system files
+.DS_Store
+
+# Environment configuration files
+.env.dev
+.env.prod
+
+# Cypress videos and screenshots (optional)
+cypress/videos/
+cypress/screenshots/
+
+# Log files
+*.log
+
+# IDE settings (e.g., Visual Studio Code)
+.vscode/
