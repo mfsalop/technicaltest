@@ -13,8 +13,8 @@ class Products {
     // BackPack Item List View
     itemAddButtonBackPack = '[data-test="add-to-cart-sauce-labs-backpack"]';
     itemRemoveButtonBackPack = '[data-test="remove-sauce-labs-backpack"]';
-    inventoryBackPackNameLink = '[data-test="item-4-title-link"]';
-    inventoryItemImgLink = '[data-test="item-4-img-link"]';
+    backPackNameLink = '[data-test="item-4-title-link"]';
+    backPackImgLink = '[data-test="item-4-img-link"]';
     inventoryImgSrc = 'data-test="inventory-item-sauce-labs-backpack-img"]';
 
     //Bike Light Item List View
@@ -44,19 +44,23 @@ class Products {
         cy.url().should('include', this.productsBaseUrl);
     }
 
-    //BacjPack Items Actions
+    //BackPack Items Actions
     clickItemAddButtonBackPack() {
         cy.get(this.itemAddButtonBackPack).click();  
     }
     clickItemRemoveButtonBackPack() {
         cy.get(this.itemRemoveButtonBackPack).click();  
     }
-    clickBackPackItemNameLink() {
-        cy.get(this.inventoryBackPackNameLink).click();  
+    clickBackPackNameLink() {
+        cy.get(this.backPackNameLink).click();  
     }
-    clickinventoryItemImgLink() {
-        cy.get(this.inventoryItemImgLink).click();  
+    clickBackPackImgLink() {
+        cy.get(this.backPackImgLink).click();  
     }
+    verifyInventoryItemName() {
+        cy.get(this.inventoryItemName).should('have.text', 'Sauce Labs Backpack');
+    }
+    
 
     //Bike Light Items Actions
     clickItemAddButtonBikeLight() {
@@ -110,6 +114,11 @@ class Products {
     }
     shortHILO() {
         cy.get(this.filterElement).select('hilo');
+    }
+
+    //Back to Products Button
+    clickBackToProductButton() {
+        cy.get(this.backToProductButton).click();  
     }
 }
 export default new Products();

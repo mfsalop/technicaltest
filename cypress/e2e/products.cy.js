@@ -28,7 +28,26 @@ describe('Standard User interacts with Products', () => {
     
   });
   
-  it('Standard User clicks on product image', () => {
-    Products.clickBackPackItemNameLink();
+  it('Standard User clicks on Product Item Name ', () => {
+    // User clicks on Product Link Name
+    Products.clickBackPackNameLink();
+    // Verify User is in the correct product page
+    Products.verifyInventoryItemName();
+    // User clicks on Return to Products Button
+    Products.clickBackToProductButton();  
+    // Verify User is in the correct product page
+    Products.verifyProductsBaseUrl();
   });
+
+  it('Standard User clicks on Product Item Image', () => {
+    // User clicks on Product Link Name
+    Products.clickBackPackImgLink();
+    // Verify User is in the correct product page
+    Products.verifyInventoryItemName();
+    // User clicks on Return to Products Button
+    Products.clickBackToProductButton();  
+    // Verify User is in the correct product page
+    Products.verifyProductsBaseUrl();
+  });
+
 });

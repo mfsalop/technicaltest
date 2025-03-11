@@ -5,6 +5,7 @@ class Login {
     textPassword = '[data-test="password"]';   
     buttonLogin = '[data-test="login-button"]'; 
     textTitle = '[data-test="title"]';
+    textErrorLockedOut = '[class="error-message-container error"]'; // I used the class name because the data-test attribute was not returning the error message, instead of using a wait, I preffer to use the class name.
     textError = '[data-test="error"]';
   
     // Visit the login page
@@ -36,8 +37,7 @@ class Login {
     }
     // Verify the error message for Locked Out User
     verifyLockedOutUserError = () => {
-        cy.get(this.textLockedError).should('have.text', 'Epic sadface: Sorry, this user has been locked out.');
-  
+        cy.get(this.textError).should('have.text', 'Epic sadface: Sorry, this user has been locked out.');
     }
     // Verify the error message for Incorrect Username
     verifyIncorrectCredentialsError = () => {

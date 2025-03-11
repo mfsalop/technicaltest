@@ -2,148 +2,87 @@ import Login from '../pageObject/loginPage';
 import Products from '../pageObject/productsPage';
 import ShoppingCart from '../pageObject/shoppingCart';
 
-describe('Users adds one product & completes checkout process', () => {
-  it('Standard User adds one product', () => {
-    // Load credentials fixture
+describe('Users add products & complete checkout process', () => {
+  let userData;
+
+  beforeEach(() => {
+    // Load credentials and user data fixtures before tests
     cy.fixture('credentials').then((credentials) => {
       const user1 = credentials.user1;
+      // Login with standard user
+      Login.visit();
+      Login.fillUsername(user1.username);
+      Login.fillPassword(user1.password);
+      Login.clickLoginButton();
+      // Verify the user has landed on the products page
+      Products.verifyProductsBaseUrl();
+    });
 
-      // Load product data fixture
-      cy.fixture('userData').then((userData) => {
-        const data1 = userData.data1;
-
-        // Visiting the login page and performing login actions
-        Login.visit();
-        Login.fillUsername(user1.username);
-        Login.fillPassword(user1.password);
-        Login.clickLoginButton();
-
-        // Verifying the user has landed on the products page
-        Products.verifyProductsBaseUrl();
-
-        // Adding one product to the cart
-        Products.clickItemAddButtonBackPack();
-
-        // Clicking the shopping cart link
-        ShoppingCart.clickShoppingCartLink();
-
-        // Proceeding to checkout
-        ShoppingCart.clickCheckoutButton();
-
-        // Filling out the checkout form with regular user data 
-        ShoppingCart.fillCheckOutFirstName(data1.firstName);
-        ShoppingCart.fillCheckOutLastName(data1.lastName);
-        ShoppingCart.fillCheckOutZipCode(data1.postalCode);  
-
-        // Clicking the continue button
-        ShoppingCart.clickContinueButton();
-
-        // Clicking the finish button to complete the order
-        ShoppingCart.clickFinishButton();
-
-        // Verifying that the order completion message appears
-        ShoppingCart.verifyCompleteContainer();
-
-        // Clicking the back to home button after order completion
-        ShoppingCart.clickBacktoHomeButton();
-      });
+    // Load user data once for all tests
+    cy.fixture('userData').then((data) => {
+      userData = data;
     });
   });
-  it ('Standard User adds all the products', () => {
-    // Load credentials fixture
-    cy.fixture('credentials').then((credentials) => {
-      const user1 = credentials.user1;
 
-      // Load product data fixture
-      cy.fixture('userData').then((userData) => {
-        const data2 = userData.data2;
-
-        // Visiting the login page and performing login actions
-        Login.visit();
-        Login.fillUsername(user1.username);
-        Login.fillPassword(user1.password);
-        Login.clickLoginButton();
-
-        // Verifying the user has landed on the products page
-        Products.verifyProductsBaseUrl();
-
-        // Adding all products to the cart
-        Products.clickItemAddButtonBackPack();
-        Products.clickItemAddButtonBikeLight();
-        Products.clickItemAddButtonBoltTShirt();
-        Products.clickItemAddButtonFleeceJacket();
-        Products.clickItemAddButtonOnesie();
-        Products.clickItemAddButtonRedTShirt();
-
-        // Clicking the shopping cart link
-        ShoppingCart.clickShoppingCartLink();
-
-        // Proceeding to checkout
-        ShoppingCart.clickCheckoutButton();
-        
-        // Filling out the checkout form with regular user data
-        ShoppingCart.fillCheckOutFirstName(data2.firstName);
-        ShoppingCart.fillCheckOutLastName(data2.lastName);
-        ShoppingCart.fillCheckOutZipCode(data2.postalCode);
-
-        // Clicking the continue button
-        ShoppingCart.clickContinueButton();
-        
-        // Clicking the finish button to complete the order
-        ShoppingCart.clickFinishButton();
-
-        // Verifying that the order completion message appears
-        ShoppingCart.verifyCompleteContainer();
-
-        // Clicking the back to home button after order completion
-        ShoppingCart.clickBacktoHomeButton();
-      });
+  // Utility function to add multiple items to the cart
+  const addItemsToCart = (items) => {
+    items.forEach(item => {
+      Products[`clickItemAddButton${item}`]();
     });
+  };
+
+  // Utility function to fill checkout form
+  const fillCheckoutForm = (data) => {
+    ShoppingCart.fillCheckOutFirstName(data.firstName);
+    ShoppingCart.fillCheckOutLastName(data.lastName);
+    ShoppingCart.fillCheckOutZipCode(data.postalCode);
+  };
+
+  it('Standard User adds one product and completes checkout', () => {
+    // Add one product to the cart
+    addItemsToCart(['BackPack']);
+
+    // Checkout process
+    ShoppingCart.clickShoppingCartLink();
+    ShoppingCart.clickCheckoutButton();
+    fillCheckoutForm(userData.data1);
+    ShoppingCart.clickContinueButton();
+    ShoppingCart.clickFinishButton();
+
+    // Verify order completion and navigate back to home
+    ShoppingCart.verifyCompleteContainer();
+    ShoppingCart.clickBacktoHomeButton();
   });
-  it('Standard User adds two products & super long data', () => {
-    // Load credentials fixture
-    cy.fixture('credentials').then((credentials) => {
-      const user1 = credentials.user1;
 
-      // Load product data fixture
-      cy.fixture('userData').then((userData) => {
-        const data3 = userData.data3;
+  it ('Standard User adds all products and completes checkout', () => {
+    // Add all products to the cart
+    addItemsToCart(['BackPack', 'BikeLight', 'BoltTShirt', 'FleeceJacket', 'Onesie', 'RedTShirt']);
 
-        // Visiting the login page and performing login actions
-        Login.visit();
-        Login.fillUsername(user1.username);
-        Login.fillPassword(user1.password);
-        Login.clickLoginButton();
+    // Checkout process
+    ShoppingCart.clickShoppingCartLink();
+    ShoppingCart.clickCheckoutButton();
+    fillCheckoutForm(userData.data2);
+    ShoppingCart.clickContinueButton();
+    ShoppingCart.clickFinishButton();
 
-        // Verifying the user has landed on the products page
-        Products.verifyProductsBaseUrl();
+    // Verify order completion and navigate back to home
+    ShoppingCart.verifyCompleteContainer();
+    ShoppingCart.clickBacktoHomeButton();
+  });
 
-        // Adding one product to the cart
-        Products.clickItemAddButtonBackPack();
+  it('Standard User adds two products and completes checkout', () => {
+    // Add two products to the cart
+    addItemsToCart(['BackPack', 'BikeLight']);
 
-        // Clicking the shopping cart link
-        ShoppingCart.clickShoppingCartLink();
+    // Checkout process
+    ShoppingCart.clickShoppingCartLink();
+    ShoppingCart.clickCheckoutButton();
+    fillCheckoutForm(userData.data3);
+    ShoppingCart.clickContinueButton();
+    ShoppingCart.clickFinishButton();
 
-        // Proceeding to checkout
-        ShoppingCart.clickCheckoutButton();
-
-        // Filling out the checkout form with regular user data 
-        ShoppingCart.fillCheckOutFirstName(data3.firstName);
-        ShoppingCart.fillCheckOutLastName(data3.lastName);
-        ShoppingCart.fillCheckOutZipCode(data3.postalCode);  
-
-        // Clicking the continue button
-        ShoppingCart.clickContinueButton();
-
-        // Clicking the finish button to complete the order
-        ShoppingCart.clickFinishButton();
-
-        // Verifying that the order completion message appears
-        ShoppingCart.verifyCompleteContainer();
-
-        // Clicking the back to home button after order completion
-        ShoppingCart.clickBacktoHomeButton();
-      });
-    });
+    // Verify order completion and navigate back to home
+    ShoppingCart.verifyCompleteContainer();
+    ShoppingCart.clickBacktoHomeButton();
   });
 });
