@@ -1,17 +1,20 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
-  projectId: 'r41ais',
+  reporter: 'cypress-mochawesome-reporter',  
+  reporterOptions: {
+    reportDir: 'cypress/reports',  
+    charts: true,
+    reportPageTitle: 'custom-title',
+    embeddedScreenshots: true,
+    inlineAssets: true,
+    saveAllAttempts: false,
+  },
   e2e: {
-    reporter: 'mochawesome',
-    reporterOptions: {
-      reportDir: 'cypress/reports',  
-      overwrite: false,              
-      html: true,                    
-      json: true,                    
-    },
+    projectId: 'r41ais',  // Ensure projectId is inside the e2e object
     setupNodeEvents(on, config) {
-      // implement node event listeners here
+      // Initialize the mochawesome reporter plugin
+      require('cypress-mochawesome-reporter/plugin')(on);
     },
   },
 });
