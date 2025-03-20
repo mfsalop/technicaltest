@@ -20,13 +20,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: 'lts'  # Use latest LTS version for compatibility
 
       - name: Install dependencies
         run: npm install
 
       - name: Set CI environment variable
-        run: echo "CI=true" >> $GITHUB_ENV  # Ensure the CI environment is set
+        run: echo "CI=true" >> $GITHUB_ENV
         shell: bash  # Ensures compatibility across OS
 
       - name: Run Cypress tests
