@@ -79,10 +79,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Create OS-Specific Reports Directory
-        run: mkdir -p cypress/reports/win32/.jsons
+      - name: Create OS-Specific Reports Directory (Windows)
+        run: New-Item -Path cypress/reports/win32/.jsons -ItemType Directory -Force
+        shell: pwsh
 
       - name: Run Cypress tests (Windows)
         run: |
-          npx cypress run --record --parallel --key ${{ secrets.CYPRESS_RECORD_KEY }} \
+          npx cypress run --record --parallel --key ${{ secrets.CYPRESS_RECORD_KEY }} `
             --ci-build-id "${{ github.run_id }}-windows"
+        shell: pwsh
