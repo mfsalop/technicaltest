@@ -3,7 +3,7 @@ name: Cypress Tests
 on:
   push:
     branches:
-      - main  # Run on push to main branch
+      - main
 
 jobs:
   cypress-linux:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        parallel-run: [1, 2, 3]  # Parallel instances within Ubuntu
+        parallel-run: [1, 2, 3]
 
     steps:
       - name: Checkout code
@@ -20,16 +20,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Use a stable LTS version
+          node-version: '18'
 
       - name: Install dependencies
         run: npm install
 
-      - name: Set CI environment variable
-        run: echo "CI=true" >> $GITHUB_ENV
-        shell: bash
+      - name: Create OS-Specific Reports Directory
+        run: mkdir -p cypress/reports/linux/.jsons
 
-      - name: Run Cypress tests in parallel (Ubuntu)
+      - name: Run Cypress tests (Ubuntu)
         run: |
           npx cypress run --record --parallel --key ${{ secrets.CYPRESS_RECORD_KEY }} \
             --ci-build-id "${{ github.run_id }}-linux"
@@ -39,7 +38,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        parallel-run: [1, 2, 3]  # Parallel instances within MacOS
+        parallel-run: [1, 2, 3]
 
     steps:
       - name: Checkout code
@@ -53,11 +52,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Set CI environment variable
-        run: echo "CI=true" >> $GITHUB_ENV
-        shell: bash
+      - name: Create OS-Specific Reports Directory
+        run: mkdir -p cypress/reports/darwin/.jsons
 
-      - name: Run Cypress tests in parallel (MacOS)
+      - name: Run Cypress tests (MacOS)
         run: |
           npx cypress run --record --parallel --key ${{ secrets.CYPRESS_RECORD_KEY }} \
             --ci-build-id "${{ github.run_id }}-macos"
@@ -67,7 +65,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        parallel-run: [1, 2, 3]  # Parallel instances within Windows
+        parallel-run: [1, 2, 3]
 
     steps:
       - name: Checkout code
@@ -81,11 +79,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Set CI environment variable
-        run: echo "CI=true" >> $GITHUB_ENV
-        shell: bash
+      - name: Create OS-Specific Reports Directory
+        run: mkdir -p cypress/reports/win32/.jsons
 
-      - name: Run Cypress tests in parallel (Windows)
+      - name: Run Cypress tests (Windows)
         run: |
           npx cypress run --record --parallel --key ${{ secrets.CYPRESS_RECORD_KEY }} \
             --ci-build-id "${{ github.run_id }}-windows"

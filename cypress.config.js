@@ -6,7 +6,7 @@ require('dotenv').config({
 module.exports = defineConfig({
   reporter: 'cypress-mochawesome-reporter',  
   reporterOptions: {
-    reportDir: 'cypress/reports',  
+    reportDir: `cypress/reports/${process.platform}`, // Separate reports by OS
     charts: true,
     reportPageTitle: 'custom-title',
     embeddedScreenshots: true,
